@@ -11,12 +11,12 @@ class EntryText(ModelForm):
         model = Entry
         fields = ['entry_text']
         
-class HomePuzzle(TemplateView):
+class HomeView(TemplateView):
     template_name = 'home.html'
 
     def get_data(self, **kwargs):
         
-        context = super(HomePuzzle, self).get_context_data(**kwargs)
+        context_data = super(HomeView, self).get_context_data(**kwargs)
 
         self.request.session['total_score'] = 0
         self.request.session['correct_answer'] = 0
@@ -25,12 +25,13 @@ class HomePuzzle(TemplateView):
         if self.request.session.has_key('clue_id') is True:
             del self.request.session['clue_id']
 
-        return context
+        return context_data
 
 class DrillView(TemplateView):
     template_name = 'drill.html'
 
     def get_context_data(self, **kwargs):
+        
         context_data = super(DrillView, self).get_context_data(**kwargs)
         repeat = False
 
@@ -40,14 +41,13 @@ class DrillView(TemplateView):
         if repeat is True:
             clue_id = self.request.session['clue_id']
             random_clue = Clue.objects.get(pk=clue_id)
- 
         else:
            random_clue = Clue.objects.order_by("?").first()
            clue_id = random_clue.id
 
            self.request.session['clue_id'] = clue_id
-           self.request.session['total'] += 1
            self.request.session['success'] = False
+           self.request.session['total_score'] += 1
            
         context_data['entry_text'] = EntryText()
         context_data['random_clue'] = random_clue
@@ -105,7 +105,7 @@ class AnswerView(TemplateView):
         context_data['clue'] = clue
         context_data['other_clues'] = other_clues
 
-        context_data['total'] = self.request.session['total']
+        context_data['total_score'] = self.request.session['total_score']
         context_data['correct'] = self.request.session['correct']
         context_data['success'] = self.request.session['success']
 
