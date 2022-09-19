@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %} Home Page {% endblock %}
+
+{% block content %}
+
+<style>
+    .button-puzzle-container{
+        padding-top:20ch;
+        text-align: center;
+    }
+    .button-init-puzzle{
+        background-color: lightskyblue;
+        text-align: center;
+        padding: 50px;
+        border-style:ridge;
+        display:inline-block;
+        width: 200px;
+        height: 20px;
+        font-size: 30px;
+        border-radius: 2rem;
+        text-decoration: none;
+        color: black
+        
+    }
+    .button-init-puzzle:hover{
+        background-color: blue;
+        color: white
+
+    }
+</style>
+
+<div class="button-puzzle-container">
+    <a class="button-init-puzzle" href="{% url 'drill' %}">Play Game</a>
+</div>
+
+{% endblock %}

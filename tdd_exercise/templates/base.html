@@ -8,9 +8,35 @@
     <title>{% block title %}Crossword Exercise{% endblock %}</title>
   </head>
 
+  <style>
+    body { 
+      margin: 0px;
+
+    }
+    nav {
+      background-color: black;
+      height: 100px;
+      
+    }
+    .company-name {
+      color: white;
+      text-align: center;
+      font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+      font-size: 40px;
+      padding-top: 20px;
+      padding-bottom: 20px;
+    }
+
+
+  </style>
+
   <body>
-    <!-- Begin page content -->
     <main role="main" class="container">
+      <nav>
+        <div class="company-name">
+          CAKTUS CROSSWORD PUZZLE
+        </div>
+      </nav>
       {% block content %}{% endblock %}
     </main>
   </body>

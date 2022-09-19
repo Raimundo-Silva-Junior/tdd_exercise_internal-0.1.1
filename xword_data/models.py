@@ -5,7 +5,8 @@ from django.db.models.deletion import CASCADE
 class PuzzleManager(Manager):
     
     def get_clue(self, clue_text):
-        return self.filter(clue_text=clue_text)
+        return self.filter(puzzle_clue__clue_text=clue_text)
+
 class Puzzle(models.Model):
     
     title = models.CharField(max_length=255)

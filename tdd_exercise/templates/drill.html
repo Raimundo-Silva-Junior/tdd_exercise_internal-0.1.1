@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% block title %} Crossword Drill {% endblock %}
+
+{% block content %}
+
+<style>
+    a, .button-submit{
+        border-style: solid;
+        text-decoration: none;
+        border-color: grey;
+        width:160px;
+        display:inline-block;
+        font-family: 'Courier New', Courier, monospace;
+        font-size: 20px;
+    }
+    .button-skip{
+        background-color: white;
+        color: black
+    }
+    .button-return{
+        background-color: red;
+        color: white
+    }
+    .button-submit{
+        background-color: green;
+        color: white
+    }
+    .button-solve{
+        background-color: lightgray;
+        color:black
+    
+    }
+
+</style>
+
+
+<div class="drill-container">
+    <div class="game-container">
+        <form action="" method="post">
+
+            <div>
+            {% if repeat %}
+            <h6 style="text-align: left; color:red; text-align: center; font-size:20px;">Wrong Answer</h6>
+            {% endif %}
+
+            <hr />
+            <div style="text-align: center;">
+                <b>Total Clues: </b>{{total_score}}
+                <b>Correct Answers: </b> {{correct_answer}}
+            </div>
+            </div>
+            <hr />
+
+            <div style="text-align: center;">
+            <h4><u>Clue:</u>  <i> {{random_clue.clue_text}} </i></h4>
+            </div>
+
+            <div>
+            {% csrf_token %}
+
+            <div style="text-align: center;">
+            <div class = "form-group"  style="text-align: center;">
+            <i style="font-size: 13px">Type in your guess below</i>
+            {% for field in entry_text %}
+            <div>{{field}}</div>
+            {% endfor %}
+            </div>
+
+            <h6 style="text-align: center;"><b>Number of letter in word: </b> {{ random_clue.entry.entry_text|length }} </h6>
+            
+            <div>
+
+            <button class="button-submit" type= "submit"  style="text-align: center;">Submit Guess</button>
+            {% if repeat is not True %}
+            <a class="button-skip" href="{% url 'drill' %}"  style="text-align: center;">Skip Clue</a>
+            {% endif %}
+            <a class="button-return" href="{% url 'home' %}"  style="text-align: center;">End Game</a>
+            <a class="button-solve" href="{% url 'answer' %}"> View Solution </a>
+            </div>
+
+        </form>
+
+        <div  style="text-align: center;">
+            <br/>
+
+            {% if random_clue.puzzle %}
+            <h4> <u>Puzzle where clue appeared: </u></h4>
+            <ol style="list-style-position: inside;">
+            <li> {{ random_clue.puzzle.byline }} by <i> {{ random_clue.puzzle.publisher }} </i> on {{ random_clue.puzzle.date }}</li>
+            </ol>
+            {% endif %}
+
+        </div>
+    </div>
+
+    <!-- <div  style="background-color: lightblue; padding: 20px; text-align: center;">
+        <a class="button-skip" href="{% url 'answer' %}"> View Solution </a>
+        <i style="color:red; font-size: 12px">This option make you lose points.</i>
+    </div> -->
+
+</div>
+
+{% endblock %}

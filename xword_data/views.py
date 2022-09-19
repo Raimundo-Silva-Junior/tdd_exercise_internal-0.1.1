@@ -14,7 +14,7 @@ class EntryText(ModelForm):
 class HomeView(TemplateView):
     template_name = 'home.html'
 
-    def get_data(self, **kwargs):
+    def get_context_data(self, **kwargs):
         
         context_data = super(HomeView, self).get_context_data(**kwargs)
 
@@ -86,27 +86,27 @@ class DrillView(TemplateView):
 class AnswerView(TemplateView):
     template_name = 'answer.html'
 
-    def get_data(self, **kwargs):
+    def get_context_data(self, **kwargs):
         
         context_data = super(AnswerView, self).get_context_data(**kwargs)
 
         if self.request.session.has_key('clue_id') is False:
             return HttpResponseRedirect(reverse('drill'))
 
-        if self.request.session.has_key('repeat'):
+        if self.request.session.has_key('repeat') is True:
             self.request.session['repeat'] = False
 
         clue_id = self.request.session['clue_id']
         clue = Clue.objects.get(pk=clue_id)
         other_clues =  Clue.objects.filter(entry=clue.entry)
-        puzzles = Puzzle.objects.get_clue_puzzles(clue.clue_text)
+        puzzles = Puzzle.clue_objects.get_clue(clue.clue_text)
 
         context_data['puzzles'] = puzzles
         context_data['clue'] = clue
         context_data['other_clues'] = other_clues
 
         context_data['total_score'] = self.request.session['total_score']
-        context_data['correct'] = self.request.session['correct']
+        context_data['correct_answer'] = self.request.session['correct_answer']
         context_data['success'] = self.request.session['success']
 
         return context_data   

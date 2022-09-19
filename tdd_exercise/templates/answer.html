@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %} Crossword Answer {% endblock %}
+{% block content %}
+
+<style>
+  a, .button-submit{
+      border-style: solid;
+      text-decoration: none;
+      border-color: grey;
+      width:160px;
+      display:inline-block;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 20px;
+      text-align: center;
+  }
+
+  .button-return{
+      background-color: red;
+      color: white
+  }
+  .button-submit{
+      background-color: green;
+      color: white
+  }
+
+</style>
+
+
+<div class="answer-container" style="text-align: center;">
+
+  <div>
+    {% if success %}
+      <h4 style="color:green"> Congratulations, you answer was correct </h4>
+    {% endif %}
+    <hr />
+    <b>Total Clues: </b>{{total_score}}
+    <b>Correct answers: </b> {{correct_answer}}
+  </div>
+  <hr/>
+
+  {% if other_clues %}
+    <h4 > Number of clues with entry: {{ clue.entry}}  </h4>
+    <ol>
+      {% for o_clue in other_clues %}
+      <li> {{ o_clue.clue_text }} - {{ o_clue.puzzle }} </li>
+      {% endfor %}
+    </ol>
+  {% endif %}
+
+  {% if puzzles %}
+  <h4> <u>Puzzles where Clue Text appeared: </u></h4>
+  <ol>
+    {% for puzzle in puzzles %}
+    <li> <h5> {{ puzzle.byline }} by <i> {{ puzzle.publisher }} </i> on {{ puzzle.date }}  </h5></li>
+    {% endfor %}
+  </ol>
+  {% endif %}
+
+  <div>
+    <a class="button-submit" href="{% url 'drill' %}" >Next Clue</a>
+    <a class="button-return" href="{% url 'home' %}">End Drill </a>
+  </div>
+
+</div>
+
+{% endblock %}
