@@ -1,6 +1,6 @@
 from django.views.generic import TemplateView
 from django.shortcuts import render
-from django.http import HttpResponseRedirect, Http404
+from django.http import HttpResponseRedirect
 from django.forms import ModelForm
 from django.urls import reverse
 from .models import Puzzle, Entry, Clue
@@ -62,7 +62,7 @@ class DrillView(TemplateView):
         
         if request.session.has_key('clue_id') is False:
             self.request.session['repeat'] = False
-            return HttpResponseRedirect(reverse('drill'))
+            return HttpResponseRedirect(reverse('xword-drill'))
 
         clue_id = self.request.session['clue_id']
 
@@ -77,11 +77,11 @@ class DrillView(TemplateView):
             self.request.session['repeat'] = False
             self.request.session['success'] = True
             
-            return HttpResponseRedirect(reverse('answer'))
+            return HttpResponseRedirect(reverse('xword-answer'))
         else:
             request.session['repeat'] = True
 
-            return HttpResponseRedirect(reverse('drill'))
+            return HttpResponseRedirect(reverse('xword-drill'))
 
 class AnswerView(TemplateView):
     template_name = 'answer.html'
@@ -91,7 +91,7 @@ class AnswerView(TemplateView):
         context_data = super(AnswerView, self).get_context_data(**kwargs)
 
         if self.request.session.has_key('clue_id') is False:
-            return HttpResponseRedirect(reverse('drill'))
+            return HttpResponseRedirect(reverse('xword-drill'))
 
         if self.request.session.has_key('repeat') is True:
             self.request.session['repeat'] = False

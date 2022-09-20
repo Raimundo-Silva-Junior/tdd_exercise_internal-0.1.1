@@ -73,10 +73,10 @@
 
             <button class="button-submit" type= "submit"  style="text-align: center;">Submit Guess</button>
             {% if repeat is not True %}
-            <a class="button-skip" href="{% url 'drill' %}"  style="text-align: center;">Skip Clue</a>
+            <a class="button-skip" href="{% url 'xword-drill' %}"  style="text-align: center;">Skip Clue</a>
             {% endif %}
             <a class="button-return" href="{% url 'home' %}"  style="text-align: center;">End Game</a>
-            <a class="button-solve" href="{% url 'answer' %}"> View Solution </a>
+            <a class="button-solve" href="{% url 'xword-answer' %}"> View Solution </a>
             </div>
 
         </form>
@@ -93,11 +93,6 @@
 
         </div>
     </div>
-
-    <!-- <div  style="background-color: lightblue; padding: 20px; text-align: center;">
-        <a class="button-skip" href="{% url 'answer' %}"> View Solution </a>
-        <i style="color:red; font-size: 12px">This option make you lose points.</i>
-    </div> -->
 
 </div>
 
